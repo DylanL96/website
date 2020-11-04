@@ -8,7 +8,7 @@ const port = process.env.PORT || 3001;
 connectDB();
 
 app.get('/', (req, res) => {
-  res.send(`Hello from ${port}`)
+  res.send(`Testing ${port}`)
 })
 
 app.listen(port, () => {
