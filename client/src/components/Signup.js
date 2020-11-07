@@ -1,13 +1,26 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
+import {isAuthenticated} from '../helpers/auth';
 import {Form, Button} from 'react-bootstrap';
 import isEmpty from 'validator/lib/isEmpty';
 import isEmail from 'validator/lib/isEmail';
 import equals from 'validator/lib/equals';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {showErrorMsg} from '../helpers/message';
+import {showErrorMsg, showSuccessMsg} from '../helpers/message';
 import {signup} from '../api/auth';
+import {useHistory} from 'react-router-dom';
+import {showLoading} from '../helpers/loading';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Signup = () => {
+  //Instantiate the history hook
+  let history = useHistory();
+
+  useEffect(() => {
+    if (isAuthenticated() && isAuthenticated().role === 1){
+      history.push('/admin')
+    } else if (isAuthenticated() && isAuthenticated().role === 0){
+      history.push('/user');
+    }
+  }, [history])
 
   //Setting the initial formData. All of their information will be stored into the component state at once.
   const [formData, setFormData] = useState({
@@ -36,10 +49,10 @@ const Signup = () => {
   
   const handleSubmit = event => {
     event.preventDefault();
-    console.log('Submitted')
+    console.log('Sign up form submitted')
 
     //Using validators to check the form submission
-    if (isEmpty(email) || isEmpty(email) || isEmpty(email) || isEmpty(email)){
+    if (isEmpty(username) || isEmpty(email) || isEmpty(password) || isEmpty(password2)){
       setFormData({
         ...formData,
         errorMsg: 'All fields are required'
@@ -61,8 +74,9 @@ const Signup = () => {
 
       //Setting the form data and creating a new iterable copy of the array using spread operator.
       setFormData({...formData, loading:true})
-      console.log(data)
+      console.log(`the sign up form data:`,data)
 
+      //Sending the data object we destructured to the signup axios POST request
       signup(data)
         .then((response => {
           setFormData({
@@ -71,11 +85,12 @@ const Signup = () => {
             password: '',
             password2: '',
             loading: false,
+            successMsg: response.data.successMessage,
           })
         }))
-        .catch((err) => {
-          console.log(`Axios sign up error: ${err}`);
-          setFormData({...formData, loading: false})
+        .catch((error) => {
+          // console.log(`Axios sign up error:`, error.response);
+          setFormData({...formData, loading: false, errorMsg: error.response.data.errorMessage})
         })
     }
   };
@@ -116,9 +131,11 @@ const Signup = () => {
 
   return (
     <div>
-      {errorMsg && showErrorMsg(errorMsg)}
+      <div>{loading && showLoading()}</div>
+      <div>{successMsg && showSuccessMsg(successMsg)}</div>
+      <div>{errorMsg && showErrorMsg(errorMsg)}</div>
       {showSignupForm()}
-      {JSON.stringify(formData)}
+      <div className="ml-3">{JSON.stringify(formData)}</div>
     </div>
   )
 }
