@@ -88,10 +88,11 @@ const signinController = async (req, res) => {
       errorMessage: `Sign in error`
     })
   }
-}
+};
+
 
 //Remember to use {} and not []
 module.exports = {
   signupController,
-  signinController
+  signinController,
 }
