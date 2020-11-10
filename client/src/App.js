@@ -9,6 +9,7 @@ import AdminRoute from './components/AdminRoute';
 import User from './components/User';
 import UserRoute from './components/UserRoute';
 import CreatePost from './components/CreatePost';
+import PostDetail from './components/PostDetail';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,8 +22,9 @@ const App = () => (
       <Route exact path='/' component={Home}/>
       <Route exact path='/signup' component={Signup}/>
       <Route exact path='/signin' component={Signin}/>
+      <Route exact path='/posts/:id' component={PostDetail}/>
       <AdminRoute exact path='/admin' component={Admin}/>
-      <AdminRoute exact path='/create' component={CreatePost}/>
+      <AdminRoute exact path='/admin/create' component={CreatePost}/>
       <UserRoute exact path='/user' component={User}/>
     </Switch>
     

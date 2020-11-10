@@ -16,7 +16,6 @@ app.use('/', authRoutes);
 app.use('/admin', adminRoutes);
 
 
-
 //Connect to mongoDB
 connectDB();
 

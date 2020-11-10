@@ -36,7 +36,7 @@ const Header = ({history}) => {
         {isAuthenticated() && isAuthenticated().role === 1 && (
           <Fragment>
           <Nav.Link href="/admin">Admin Dashboard</Nav.Link>
-          <Nav.Link href="/create">Create a Post</Nav.Link>         
+          <Nav.Link href="/admin/create">Create a Post</Nav.Link>         
           </Fragment>
             )}
         {isAuthenticated() && (
