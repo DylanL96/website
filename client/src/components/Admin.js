@@ -8,15 +8,16 @@ const Admin = () => {
 
   //Get request to retrieve the data
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: `http://localhost:3001/admin/dashboard`
-    }).then(res => {
-      setData(res.data)
-      // console.log(res.data)
-      setLoading(false)
-    })
+    axios.get(`http://localhost:3001/admin/dashboard`)
+      .then(result => {
+        setData(result.data)
+        setLoading(false)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },[])
+
 
   const renderTable = (a,b) => {
     // console.log(b)

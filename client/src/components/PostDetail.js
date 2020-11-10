@@ -1,22 +1,31 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import {isAuthenticated} from '../helpers/auth';
+import {useHistory, Link} from 'react-router-dom';
+import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 
 const Post = ({match}) => {
-  // console.log(match)
+  //Obtains the userName from localStorage
   const [post, setPost] = useState([]); 
   const [delPost, setDelPost] = useState([]);
+  let history = useHistory();
 
   //Delete post
   const deletePost = id => {
     axios.delete(`http://localhost:3001/admin/posts/${id}`)
       .then(result => {
-        alert(`Deleted ${id}`)
-        console.log(result)
+        // setMessage({successMsg: result.data.successMessage})
         setDelPost(delPost.filter(element => element._id !==id))
+        history.push('/')
     }
-  )}
+  )};
+  
+  //Update post
+  const updatePost = id => {
+    axios.put(`http://localhost:3001/admin/posts/${id}`, {
+      post: post
+    })
+  }
 
   //Get all of the posts
   useEffect(() => {
@@ -31,19 +40,16 @@ const Post = ({match}) => {
   }, [match.params.id])
 
   return (
-
     <Card style={{ width: '180rem' }}>
     <Card.Body>
-    {isAuthenticated() && isAuthenticated().role===1 && (
-        <button onClick={() => deletePost(post._id)}>Delete</button>
+      {isAuthenticated() && isAuthenticated().role===1 && (
+          <button onClick={() => deletePost(post._id)}>Delete</button>
       )}
       <Card.Title>{post.title}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted">{post.description}</Card.Subtitle>
-      <Card.Text>
+      <Card.Body>
       {post.content}
-      </Card.Text>
-      <Card.Link href="#">Card Link</Card.Link>
-      <Card.Link href="#">Another Link</Card.Link>
+      </Card.Body>
     </Card.Body>
   </Card>
  

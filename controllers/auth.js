@@ -74,6 +74,7 @@ const signinController = async (req, res) => {
         console.log(`JWT error: ${err}`)
       }
       const {_id, username, email, role} = user;
+      
 
       //If all goes well, we send back JWTToken and the specific user information.
       res.json({

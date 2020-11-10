@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // When we use withRouter, we get access to some properties, which history is one of.
 const Header = ({history}) => {
+  const userName = isAuthenticated();
+  // console.log(userName)
+  
   //Event handler for log out
   const handleLogout = event => {
     logout(() => {
@@ -42,6 +45,7 @@ const Header = ({history}) => {
         {isAuthenticated() && (
           <Fragment>
           <Nav.Link href="/signin" onClick={handleLogout}>Logout</Nav.Link>
+        <Nav.Link href="/admin/create">Welcome, {userName.username}</Nav.Link>
           <NavDropdown title="Dropdown" id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

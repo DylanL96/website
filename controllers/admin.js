@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Post = require('../models/Post');
+const { Mongoose } = require('mongoose');
 
 // const adminList = ('/admin/dashboard', (req, res) => {
 //   User.find({})
@@ -20,12 +21,13 @@ const registeredUsersList = async(req, res) => {
 //Creating post data and submitting into mongoDB
 const postContent = async (req,res) => {
   const {title, description, content} = req.body
+  console.log(req)
   
   try {
     const newPost = new Post({
       title: title,
       description: description,
-      content: content
+      content: content,
     });
 
     //Saving the post to MongoDB
@@ -55,7 +57,7 @@ const postedContent = async (req,res) => {
 
 //Get specific posts from mongoDB
 const specificPostedContent = async (req, res) => {
-  console.log(req.params.id)
+  // console.log(req.params.id)
   try {
     const specificpost = await Post.findById(req.params.id)
     return res.json(specificpost)
@@ -68,12 +70,15 @@ const specificPostedContent = async (req, res) => {
 //Delete posts
 const deletePostedContent = async (req, res) => {
   try {
-    await Post.findByIdAndDelete(req.params.id);
-    res.status(200).send()
+    await Post.findByIdAndDelete(req.params.id)
+    // console.log(req)
+    res.status(200).send({
+      successMessage: `Deleted Post: ${req.params.id}`
+    })
   } catch (error) {
     console.log(error)
   }
-}
+};
 
 
 module.exports = {

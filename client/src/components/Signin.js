@@ -76,7 +76,7 @@ const Signin = () => {
 
           //We can chain role property to isAuthenticated() bc when we created isAuthenticated, we are returning getLocalStorage which is returning the user object, so we have access to it.
           if (isAuthenticated() && isAuthenticated().role === 1){
-            console.log(`Redirect to Admin Dashboard`);
+            // console.log(`Redirect to Admin Dashboard`);
             history.push('/admin')
           } else {
             console.log(`Redirect to User dashboard`);
