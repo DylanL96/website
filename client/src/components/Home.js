@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div>
       {post.map(posts=>
-      <Card style={{ width: '18rem' }} key={posts._id}>
+      <Card key={posts._id} className="all-blogs-display">
       <Card.Body>
       <Card.Title>{posts.title}</Card.Title>
         <Card.Text>

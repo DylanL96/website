@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {isAuthenticated} from '../helpers/auth';
-import {useHistory, Link} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form'
 
 const Post = ({match}) => {
   //Obtains the userName from localStorage
@@ -19,13 +21,6 @@ const Post = ({match}) => {
         history.push('/')
     }
   )};
-  
-  //Update post
-  const updatePost = id => {
-    axios.put(`http://localhost:3001/admin/posts/${id}`, {
-      post: post
-    })
-  }
 
   //Get all of the posts
   useEffect(() => {
@@ -40,19 +35,17 @@ const Post = ({match}) => {
   }, [match.params.id])
 
   return (
-    <Card style={{ width: '180rem' }}>
-    <Card.Body>
-      {isAuthenticated() && isAuthenticated().role===1 && (
-          <button onClick={() => deletePost(post._id)}>Delete</button>
-      )}
+    
+    <Card>
       <Card.Title>{post.title}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted">{post.description}</Card.Subtitle>
-      <Card.Body>
+      <Card.Body id="post-detail-content">
       {post.content}
       </Card.Body>
-    </Card.Body>
-  </Card>
- 
-  
-)}
+      {isAuthenticated() && isAuthenticated().role===1 && (
+          <Button variant="danger" onClick={() => deletePost(post._id)}>Delete</Button>
+      )}
+    </Card>
+    
+)};
 export default Post;

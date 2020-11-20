@@ -24,10 +24,10 @@ const Signup = () => {
 
   //Setting the initial formData. All of their information will be stored into the component state at once.
   const [formData, setFormData] = useState({
-    username: 'Dylan',
-    email: 'dlaw96@hotmail.com',
-    password: '123123',
-    password2: '123123',
+    username: '',
+    email: '',
+    password: '',
+    password2: '',
     successMsg: false,
     errorMsg: false,
     loading: false
@@ -135,7 +135,7 @@ const Signup = () => {
       <div>{successMsg && showSuccessMsg(successMsg)}</div>
       <div>{errorMsg && showErrorMsg(errorMsg)}</div>
       {showSignupForm()}
-      <div className="ml-3">{JSON.stringify(formData)}</div>
+      {/* <div className="ml-3">{JSON.stringify(formData)}</div> */}
     </div>
   )
 }
